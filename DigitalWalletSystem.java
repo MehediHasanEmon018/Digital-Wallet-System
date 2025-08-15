@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.digitalwalletsystem;
 
 import java.awt.*;
@@ -140,7 +136,7 @@ public class DigitalWalletSystem extends JFrame {
         JPanel dashboardPanel = new JPanel(new BorderLayout());
         dashboardPanel.setBackground(Color.WHITE);
 
-        JPanel top = new JPanel(new GridLayout(2,1));
+        JPanel top = new JPanel(new GridLayout(2, 1));
         top.setBackground(Color.WHITE);
 
         welcomeLabel = new JLabel("Welcome to DigitalWalletSystem", SwingConstants.CENTER);
@@ -154,23 +150,35 @@ public class DigitalWalletSystem extends JFrame {
         top.add(balanceLabel);
         dashboardPanel.add(top, BorderLayout.NORTH);
 
+        // Grid section
         JPanel gridWrapper = new JPanel(new GridBagLayout());
         gridWrapper.setBackground(Color.WHITE);
 
-        JPanel gridPanel = new JPanel(new GridLayout(4, 2, 15, 15));
+        JPanel gridPanel = new JPanel(new GridLayout(0, 3, 15, 15));
         gridPanel.setBackground(Color.WHITE);
 
-        gridPanel.add(createActionButton("Send Money",          () -> sendMoney(true)));
-        gridPanel.add(createActionButton("Receive Money",       () -> receiveMoney()));
-        gridPanel.add(createActionButton("Send Remittance",     () -> sendRemittance()));
-        gridPanel.add(createActionButton("Send Salami",         () -> simpleOutflow("Send Salami", true)));
-        gridPanel.add(createActionButton("LenDen to Bank",      () -> bankTransfer()));
-        gridPanel.add(createActionButton("Add Money",           () -> addMoneyFromMerchant()));
-        gridPanel.add(createActionButton("History",             () -> showHistoryDialog()));
+        // Add buttons
+        ArrayList<JButton> buttons = new ArrayList<>();
+        buttons.add(createActionButton("Send Money", () -> sendMoney(true)));
+        buttons.add(createActionButton("Receive Money", () -> receiveMoney()));
+        buttons.add(createActionButton("Send Remittance", () -> sendRemittance()));
+        buttons.add(createActionButton("Send Salami", () -> simpleOutflow("Send Salami", true)));
+        buttons.add(createActionButton("LenDen to Bank", () -> bankTransfer()));
+        buttons.add(createActionButton("Add Money", () -> addMoneyFromMerchant()));
+        JButton historyBtn = createActionButton("History", () -> showHistoryDialog());
+
+        // First 6 buttons (2 rows)
+        for (int i = 0; i < 6; i++) gridPanel.add(buttons.get(i));
+
+        // Last row: center the "History" button
+        gridPanel.add(new JPanel()); // empty left
+        gridPanel.add(historyBtn);   // center
+        gridPanel.add(new JPanel()); // empty right
 
         gridWrapper.add(gridPanel);
         dashboardPanel.add(gridWrapper, BorderLayout.CENTER);
 
+        // Bottom section
         JPanel bottom = new JPanel();
         bottom.setBackground(Color.WHITE);
         JButton logoutBtn = createStyledButton("Logout", buttonFont, 35, 5);
@@ -185,6 +193,7 @@ public class DigitalWalletSystem extends JFrame {
         return dashboardPanel;
     }
 
+    // --- All other methods remain the same ---
     private void handleLogin() {
         String phone = loginPhone.getText().trim();
         String pass  = new String(loginPass.getPassword());
