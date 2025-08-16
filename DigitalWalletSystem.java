@@ -255,7 +255,7 @@ public class DigitalWalletSystem extends JFrame {
         currentUser.balance -= amount;
         recipient.balance += amount;
 
-        addHistory(currentUser, "Send Money to " + recipient.phone, amount);
+        addHistory(currentUser, "Sent Money to " + recipient.phone, amount);
         addHistory(recipient, "Received Money from " + currentUser.phone, amount);
 
         refreshDashboardHeader();
@@ -330,21 +330,22 @@ public class DigitalWalletSystem extends JFrame {
     private void requestMoney() {
         if (!ensureLoggedIn()) return;
 
-        String fromPhone = promptString("Enter number to request from:");
-        if (fromPhone == null) return;
+        String senderPhone = promptString("Enter phone number to request money from:");
+        if (senderPhone == null) return;
+
+        Account sender = findAccountByPhone(senderPhone);
+        if (sender == null) {
+            JOptionPane.showMessageDialog(this, "No account exists with this number.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
         Double amount = promptAmount("Enter amount to request:");
         if (amount == null || amount <= 0) return;
 
-        Account sender = findAccountByPhone(fromPhone);
-        if (sender == null) {
-            JOptionPane.showMessageDialog(this, "Account not found.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        addHistory(sender, "Money Request from " + currentUser.phone, amount);
         addHistory(currentUser, "Requested Money from " + sender.phone, amount);
+        addHistory(sender, "Money request sent to " + currentUser.phone, amount);
 
+        refreshDashboardHeader();
         JOptionPane.showMessageDialog(this, "Money request sent to " + sender.phone);
     }
 
