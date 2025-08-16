@@ -511,3 +511,4 @@ public class DigitalWalletSystem extends JFrame {
         SwingUtilities.invokeLater(() -> new DigitalWalletSystem().setVisible(true));
     }
 }
+
