@@ -1,35 +1,82 @@
-# DigitalWalletSystem
+DigitalWalletSystem
 
-**DigitalWalletSystem** is a Java-based desktop application built using Swing that simulates a basic digital wallet system. It provides users with functionalities to manage finances, perform transactions, and track transaction history, all within an intuitive graphical interface.
+A simple Java Swing-based Digital Wallet Application that allows users to create accounts, log in, and perform digital wallet transactions such as sending money, remittance, salami transfers, and bank transfers. It also supports a money request system and maintains transaction histories for all accounts.
 
-## Features
-- **User Authentication:** Sign up and login functionality to ensure secure access.
-- **Dashboard:** Displays user information, current balance, and provides quick access to wallet features.
-- **Send/Receive Money:** Users can send money to other users and receive funds.
-- **Remittance:** Support for sending remittance to other users with ZIP code verification.
-- **Bank Transfer:** Transfer money from the wallet to a bank account.
-- **Add Money:** Add funds from a merchant to the wallet balance.
-- **Transaction History:** View detailed history of all transactions including date, type, and amount.
-- **Logout:** Securely logout from the system.
+🚀 Features
 
-## Technical Details
-- **Language & Framework:** Java (Swing for GUI)
-- **Design:** CardLayout for multi-screen navigation
-- **OOP Concepts:** Encapsulation, classes, methods, and object management
-- **Data Management:** Stores account info in memory using ArrayList and transaction history in DefaultTableModel
-- **GUI Elements:** Buttons, labels, tables, dialogs, and form inputs for an interactive experience
-- **Validation & Security:** Password verification for sensitive operations
+Account Management
 
-## How to Run
-1. Clone the repository or download the source code.
-2. Open in any Java IDE (NetBeans, Eclipse, IntelliJ IDEA).
-3. Compile and run `DigitalWalletSystem.java`.
-4. Use the GUI to sign up, login, and explore wallet functionalities.
+User sign up and secure login with phone number & password.
 
-## Future Enhancements
-- Persistent data storage using files or databases.
-- Integration with real payment APIs.
-- Enhanced security features like hashed passwords.
-- Improved UI/UX with modern GUI components.
+Individual account balance and transaction history.
 
+Transactions
+
+Send Money – transfer funds to another wallet user.
+
+International Remittance – send money outside the country.
+
+Send Salami – send festive gift money.
+
+Bank Transfer (LenDen) – transfer wallet balance to a bank account.
+
+Money Request System
+
+Instead of direct receiving, users send a money request to another account.
+
+Requested user can approve and complete the transaction.
+
+Transaction History
+
+Both sender and receiver see detailed logs.
+
+Timestamp included for every transaction.
+
+🛠️ Tech Stack
+
+Language: Java
+
+GUI Framework: Swing (with CardLayout)
+
+Data Handling: ArrayList (to store user accounts & transaction history)
+
+IDE Recommendation: NetBeans / IntelliJ / Eclipse
+
+📂 How to Run
+
+Clone or download this repository.
+
+Open the project in your Java IDE.
+
+Run the DigitalWalletSystem.java file.
+
+Sign up for a new account or log in with existing credentials.
+
+Explore the features: send money, request money, check history, etc.
+
+📌 Example Use Case
+
+User A signs up with phone 017XXXXXXXX.
+
+User B signs up with phone 018XXXXXXXX.
+
+User A selects Send Money, enters User B’s phone and amount.
+
+User B’s history shows “Received from 017XXXXXXXX” while User A’s history shows “Sent to 018XXXXXXXX”.
+
+If User B needs funds, they use Request Money from User A.
+
+📖 Future Improvements
+
+Database integration (MySQL/SQLite) instead of ArrayList.
+
+OTP verification for login.
+
+Mobile app version (JavaFX or Android).
+
+👨‍💻 Author
+
+Name: Mehedi Hasan Emon
+
+Project: DigitalWalletSystem (Java OOP Project)
 This project is ideal for learning Java Swing, object-oriented programming, and basic wallet system implementation in a desktop application environment.
