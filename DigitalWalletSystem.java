@@ -1,3 +1,5 @@
+
+
 package com.mycompany.digitalwalletsystem;
 
 import java.awt.*;
@@ -150,35 +152,35 @@ public class DigitalWalletSystem extends JFrame {
         top.add(balanceLabel);
         dashboardPanel.add(top, BorderLayout.NORTH);
 
-        // Grid section
         JPanel gridWrapper = new JPanel(new GridBagLayout());
         gridWrapper.setBackground(Color.WHITE);
 
         JPanel gridPanel = new JPanel(new GridLayout(0, 3, 15, 15));
         gridPanel.setBackground(Color.WHITE);
 
-        // Add buttons
         ArrayList<JButton> buttons = new ArrayList<>();
         buttons.add(createActionButton("Send Money", () -> sendMoney(true)));
-        buttons.add(createActionButton("Receive Money", () -> receiveMoney()));
+        buttons.add(createActionButton("Receive Money", () -> requestMoney()));
         buttons.add(createActionButton("Send Remittance", () -> sendRemittance()));
-        buttons.add(createActionButton("Send Salami", () -> simpleOutflow("Send Salami", true)));
+        buttons.add(createActionButton("Send Salami", () -> sendSalami()));
         buttons.add(createActionButton("LenDen to Bank", () -> bankTransfer()));
         buttons.add(createActionButton("Add Money", () -> addMoneyFromMerchant()));
         JButton historyBtn = createActionButton("History", () -> showHistoryDialog());
 
-        // First 6 buttons (2 rows)
         for (int i = 0; i < 6; i++) gridPanel.add(buttons.get(i));
 
-        // Last row: center the "History" button
-        gridPanel.add(new JPanel()); // empty left
-        gridPanel.add(historyBtn);   // center
-        gridPanel.add(new JPanel()); // empty right
+        JPanel emptyLeft = new JPanel();
+        emptyLeft.setBackground(Color.WHITE);
+        JPanel emptyRight = new JPanel();
+        emptyRight.setBackground(Color.WHITE);
+
+        gridPanel.add(emptyLeft);
+        gridPanel.add(historyBtn);
+        gridPanel.add(emptyRight);
 
         gridWrapper.add(gridPanel);
         dashboardPanel.add(gridWrapper, BorderLayout.CENTER);
 
-        // Bottom section
         JPanel bottom = new JPanel();
         bottom.setBackground(Color.WHITE);
         JButton logoutBtn = createStyledButton("Logout", buttonFont, 35, 5);
@@ -193,7 +195,6 @@ public class DigitalWalletSystem extends JFrame {
         return dashboardPanel;
     }
 
-    // --- All other methods remain the same ---
     private void handleLogin() {
         String phone = loginPhone.getText().trim();
         String pass  = new String(loginPass.getPassword());
@@ -261,12 +262,49 @@ public class DigitalWalletSystem extends JFrame {
         JOptionPane.showMessageDialog(this, "Send successful!\nYour Balance: " + currentUser.balance);
     }
 
+    private void sendSalami() {
+        if (!ensureLoggedIn()) return;
+        if (!confirmPassword()) return;
+
+        String recipientPhone = promptString("Enter recipient phone:");
+        if (recipientPhone == null) return;
+
+        Account recipient = findAccountByPhone(recipientPhone);
+        if (recipient == null) {
+            JOptionPane.showMessageDialog(this, "Recipient not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Double amount = promptAmount("Enter Salami amount:");
+        if (amount == null || amount <= 0) return;
+
+        if (currentUser.balance < amount) {
+            JOptionPane.showMessageDialog(this, "Insufficient balance.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        currentUser.balance -= amount;
+        recipient.balance += amount;
+
+        addHistory(currentUser, "Sent Salami to " + recipient.phone, amount);
+        addHistory(recipient, "Received Salami from " + currentUser.phone, amount);
+
+        refreshDashboardHeader();
+        JOptionPane.showMessageDialog(this, "Salami sent successfully!\nYour Balance: " + currentUser.balance);
+    }
+
     private void sendRemittance() {
         if (!ensureLoggedIn()) return;
         if (!confirmPassword()) return;
 
         String recipientPhone = promptString("Enter recipient phone:");
         if (recipientPhone == null) return;
+
+        Account recipient = findAccountByPhone(recipientPhone);
+        if (recipient == null) {
+            JOptionPane.showMessageDialog(this, "Recipient not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         String zip = promptString("Enter recipient ZIP code:");
         if (zip == null) return;
@@ -280,40 +318,34 @@ public class DigitalWalletSystem extends JFrame {
         }
 
         currentUser.balance -= amount;
-        addHistory(currentUser, "Sent Remittance to " + recipientPhone + " ZIP:" + zip, amount);
+        recipient.balance += amount;
+
+        addHistory(currentUser, "Sent Remittance to " + recipient.phone + " ZIP:" + zip, amount);
+        addHistory(recipient, "Received Remittance from " + currentUser.phone + " ZIP:" + zip, amount);
 
         refreshDashboardHeader();
         JOptionPane.showMessageDialog(this, "Remittance sent successfully!\nYour Balance: " + currentUser.balance);
     }
 
-    private void receiveMoney() {
+    private void requestMoney() {
         if (!ensureLoggedIn()) return;
 
-        String senderPhone = promptString("Enter sender phone:");
-        if (senderPhone == null) return;
+        String fromPhone = promptString("Enter number to request from:");
+        if (fromPhone == null) return;
 
-        Double amount = promptAmount("Enter amount to receive:");
+        Double amount = promptAmount("Enter amount to request:");
         if (amount == null || amount <= 0) return;
 
-        Account sender = findAccountByPhone(senderPhone);
+        Account sender = findAccountByPhone(fromPhone);
         if (sender == null) {
-            JOptionPane.showMessageDialog(this, "No account exists with this number.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Account not found.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (sender.balance < amount) {
-            JOptionPane.showMessageDialog(this, "Sender has insufficient balance.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        addHistory(sender, "Money Request from " + currentUser.phone, amount);
+        addHistory(currentUser, "Requested Money from " + sender.phone, amount);
 
-        sender.balance -= amount;
-        currentUser.balance += amount;
-
-        addHistory(sender, "Send Money to " + currentUser.phone, amount);
-        addHistory(currentUser, "Received Money from " + sender.phone, amount);
-
-        refreshDashboardHeader();
-        JOptionPane.showMessageDialog(this, "Received successfully!\nYour Balance: " + currentUser.balance);
+        JOptionPane.showMessageDialog(this, "Money request sent to " + sender.phone);
     }
 
     private void addMoneyFromMerchant() {
@@ -332,30 +364,20 @@ public class DigitalWalletSystem extends JFrame {
         JOptionPane.showMessageDialog(this, "Money added successfully!\nYour Balance: " + currentUser.balance);
     }
 
-    private void simpleOutflow(String type, boolean requirePassword) {
-        if (!ensureLoggedIn()) return;
-        if (requirePassword && !confirmPassword()) return;
-
-        Double amount = promptAmount("Enter amount:");
-        if (amount == null || amount <= 0) return;
-
-        if (currentUser.balance < amount) {
-            JOptionPane.showMessageDialog(this, "Insufficient balance.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        currentUser.balance -= amount;
-        addHistory(currentUser, type, amount);
-
-        refreshDashboardHeader();
-        JOptionPane.showMessageDialog(this, type + " successful!\nYour Balance: " + currentUser.balance);
-    }
-
     private void bankTransfer() {
         if (!ensureLoggedIn()) return;
         if (!confirmPassword()) return;
 
-        String bankNumber = promptString("Enter bank account number:");
+        String recipientPhone = promptString("Enter recipient phone:");
+        if (recipientPhone == null) return;
+
+        Account recipient = findAccountByPhone(recipientPhone);
+        if (recipient == null) {
+            JOptionPane.showMessageDialog(this, "Recipient not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String bankNumber = promptString("Enter recipient bank account number:");
         if (bankNumber == null) return;
 
         Double amount = promptAmount("Enter amount to transfer:");
@@ -367,7 +389,10 @@ public class DigitalWalletSystem extends JFrame {
         }
 
         currentUser.balance -= amount;
-        addHistory(currentUser, "Transferred to bank " + bankNumber, amount);
+        recipient.balance += amount;
+
+        addHistory(currentUser, "Transferred to bank " + bankNumber + " of " + recipient.phone, amount);
+        addHistory(recipient, "Received Bank Transfer from " + currentUser.phone + " to bank " + bankNumber, amount);
 
         refreshDashboardHeader();
         JOptionPane.showMessageDialog(this, "Bank transfer successful!\nYour Balance: " + currentUser.balance);
