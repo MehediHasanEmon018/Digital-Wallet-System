@@ -4,13 +4,13 @@ A simple Java Swing-based Digital Wallet Application that allows users to create
 
 🚀 Features
 
-Account Management
+Account Management:
 
 User sign up and secure login with phone number & password.
 
 Individual account balance and transaction history.
 
-Transactions
+Transactions:
 
 Send Money – transfer funds to another wallet user.
 
@@ -20,13 +20,13 @@ Send Salami – send festive gift money.
 
 Bank Transfer (LenDen) – transfer wallet balance to a bank account.
 
-Money Request System
+Money Request System:
 
 Instead of direct receiving, users send a money request to another account.
 
 Requested user can approve and complete the transaction.
 
-Transaction History
+Transaction History:
 
 Both sender and receiver see detailed logs.
 
