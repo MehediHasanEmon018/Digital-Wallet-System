@@ -1,18 +1,11 @@
-💳 DigitalWalletSystem
-
-A Java Swing-based Digital Wallet Application that allows users to create accounts, log in, and perform wallet transactions like Send Money, Remittance, Salami Transfers, and Bank Transfers.
-It also supports a Money Request System and maintains detailed transaction histories for all users.
-
 🚀 Features
 🔐 Account Management
 
-Sign up with phone number & password
+User Sign Up with phone number & password
 
-Secure login system
+Secure Login system
 
-Individual account balance tracking
-
-Personal transaction history
+Individual account balance & personal transaction history
 
 💸 Transactions
 
@@ -22,23 +15,23 @@ International Remittance → Send money outside the country
 
 Send Salami → Festive gift money transfer
 
-Bank Transfer (LenDen) → Move wallet balance to bank account
+Bank Transfer (LenDen) → Transfer wallet balance to bank account
 
 📩 Money Request System
 
-Users can request money from others
+Instead of direct receiving, users can send a money request
 
-Request must be approved to complete the transaction
+Requested user must approve to complete the transaction
 
 Both accounts see the request status in history
 
 📜 Transaction History
 
-Both sender and receiver see logs
+Both sender and receiver see detailed transaction logs
 
-Each transaction has a timestamp
+Every transaction has a timestamp
 
-Clear record of all transfers
+Easy to track transfers & requests
 
 🛠️ Tech Stack
 
@@ -54,13 +47,13 @@ IDE Recommendation: NetBeans / IntelliJ / Eclipse
 
 Clone or download this repository
 
-Open the project in your preferred IDE
+Open the project in your Java IDE
 
 Run DigitalWalletSystem.java
 
-Create a new account or log in with existing credentials
+Sign up for a new account or log in with existing credentials
 
-Explore features: send money, request money, check history, etc.
+Explore features: Send Money, Request Money, Check History, etc.
 
 📌 Example Use Case
 
@@ -87,4 +80,6 @@ If User B needs funds → they use Request Money from User A
 👨‍💻 Author
 
 Name: Mehedi Hasan Emon
-Project: DigitalWalletSystem
+Project: DigitalWalletSystem (Java OOP Project)
+
+💡 This project is ideal for learning Java Swing, Object-Oriented Programming, and implementing a basic wallet system in a desktop environment.
