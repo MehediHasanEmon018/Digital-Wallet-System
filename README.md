@@ -1,5 +1,5 @@
 🚀 Features
-🔐 Account Management
+🔐 Account Management:
 
 User Sign Up with phone number & password
 
@@ -7,33 +7,33 @@ Secure Login system
 
 Individual account balance & personal transaction history
 
-💸 Transactions
+💸 Transactions:
 
-Send Money → Transfer funds between wallet users
+-Send Money → Transfer funds between wallet users
 
-International Remittance → Send money outside the country
+-International Remittance → Send money outside the country
 
-Send Salami → Festive gift money transfer
+-Send Salami → Festive gift money transfer
 
-Bank Transfer (LenDen) → Transfer wallet balance to bank account
+-Bank Transfer (LenDen) → Transfer wallet balance to bank account
 
-📩 Money Request System
+📩 Money Request System:
 
-Instead of direct receiving, users can send a money request
+-Instead of direct receiving, users can send a money request
 
-Requested user must approve to complete the transaction
+-Requested user must approve to complete the transaction
 
-Both accounts see the request status in history
+-Both accounts see the request status in history
 
-📜 Transaction History
+📜 Transaction History:
 
-Both sender and receiver see detailed transaction logs
+-Both sender and receiver see detailed transaction logs
 
-Every transaction has a timestamp
+-Every transaction has a timestamp
 
-Easy to track transfers & requests
+-Easy to track transfers & requests
 
-🛠️ Tech Stack
+🛠️ Tech Stack:
 
 Language: Java
 
@@ -43,33 +43,33 @@ Data Handling: ArrayList (for user accounts & history)
 
 IDE Recommendation: NetBeans / IntelliJ / Eclipse
 
-📂 How to Run
+📂 How to Run:
 
-Clone or download this repository
+-Clone or download this repository
 
-Open the project in your Java IDE
+-Open the project in your Java IDE
 
-Run DigitalWalletSystem.java
+-Run DigitalWalletSystem.java
 
-Sign up for a new account or log in with existing credentials
+-Sign up for a new account or log in with existing credentials
 
-Explore features: Send Money, Request Money, Check History, etc.
+-Explore features: Send Money, Request Money, Check History, etc.
 
-📌 Example Use Case
+📌 Example Use Case:
 
-User A signs up with phone 017XXXXXXXX
+-User A signs up with phone 017XXXXXXXX
 
-User B signs up with phone 018XXXXXXXX
+-User B signs up with phone 018XXXXXXXX
 
-User A selects Send Money, enters User B’s phone & amount
+-User A selects Send Money, enters User B’s phone & amount
 
-User A’s history → “Sent to 018XXXXXXXX”
+-User A’s history → “Sent to 018XXXXXXXX”
 
-User B’s history → “Received from 017XXXXXXXX”
+-User B’s history → “Received from 017XXXXXXXX”
 
-If User B needs funds → they use Request Money from User A
+-If User B needs funds → they use Request Money from User A
 
-🔮 Future Improvements
+🔮 Future Improvements:
 
 🔗 Database integration (MySQL/SQLite)
 
@@ -77,7 +77,7 @@ If User B needs funds → they use Request Money from User A
 
 📱 Mobile app version (JavaFX or Android)
 
-👨‍💻 Author
+👨‍💻 Author:
 
 Name: Mehedi Hasan Emon
 Project: DigitalWalletSystem (Java OOP Project)
